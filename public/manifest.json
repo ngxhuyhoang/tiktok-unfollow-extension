@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "TikTok Unfollow Extension",
+  "author": "Hoang Nguyen Huy",
+  "version": "1.0.0",
+  "description": "Tool auto unfollow TikTok",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["https://www.tiktok.com/*"],
+  "action": {
+    "default_popup": "index.html"
+  }
+}

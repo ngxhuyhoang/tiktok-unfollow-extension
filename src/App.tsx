@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [isStarted, setIsStarted] = useState(false);
+
+  const handleStart = () => {
+    setIsStarted(true);
+
+    chrome.tabs.query(
+      { active: true, currentWindow: true },
+      (tabs: chrome.tabs.Tab[]) => {
+        if (!tabs || tabs.length === 0) return;
+        if (!tabs[0].id) return;
+
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          files: ["content-script.js"],
+        });
+      }
+    );
+  };
+
+  const handleStop = () => {
+    setIsStarted(false);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1>TikTok Unfollow Extension</h1>
+      <p>Status: {isStarted ? "Running" : "Stopped"}</p>
+      <button onClick={isStarted ? handleStop : handleStart}>
+        {isStarted ? "Stop" : "Start"}
+      </button>
+    </div>
+  );
+};
 
-export default App
+export default App;
