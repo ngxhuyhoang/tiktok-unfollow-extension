@@ -7,7 +7,7 @@ const onUnfollowButtonClick = async () => {
   while (true) {
     console.log("Bắt đầu quá trình Unfollow...");
 
-    await sleep(5000); // Đợi 1 giây trước khi thực hiện hành động
+    await sleep(3000); // Đợi 1 giây trước khi thực hiện hành động
 
     // Sử dụng querySelectorAll để lấy tất cả button unfollow
     const unfollowButton = document.querySelector(
